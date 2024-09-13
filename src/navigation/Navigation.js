@@ -7,6 +7,7 @@ import Search from 'components/Search'
 import FilmDetail from 'components/FilmDetail'
 import Favorites from 'components/Favorites'
 import News from 'components/News'
+import Servicetraiteur from 'components/Servicetraiteur'
 import { Image, StyleSheet } from 'react-native'
 
 
@@ -19,10 +20,7 @@ const SearchStackNavigator = () => {
         name="Rechercher"
         component={Search}
       />
-      <Stack.Screen
-        name="FilmDetail"
-        component={FilmDetail}
-      />
+
     </Stack.Navigator>
   )
 }
@@ -56,6 +54,18 @@ const NewssStackNavigator = () => {
         component={FilmDetail}
       />
     </Ne.Navigator>
+  )
+}
+
+const Svct = createNativeStackNavigator();
+const ServicetraiteurStackNavigator = () => {
+  return (
+    <Svct.Navigator>
+      <Svct.Screen
+        name="Service traiteur"
+        component={Servicetraiteur}
+      />
+    </Svct.Navigator>
   )
 }
 
