@@ -1,75 +1,31 @@
-import { enablePromise,openDatabase} from "react-native-sqlite-storage"
+import SQLite from 'react-native-sqlite-storage';
+import RNFS from 'react-native-fs';
+import { DATABASE_NAME, SQL_FILE_PATH } from 'db/config';
 
-// Enable promise for SQLite
-enablePromise(true)
+const db = SQLite.openDatabase(
+  { name: DATABASE_NAME, location: 'default' },
+  () => console.log('Database opened'),
+  error => console.log('Error: ', error)
+);
 
-export const connectToDatabase = async () => {
-  return openDatabase(
-    { name: "serviceTraiteurDB.db", location: "default" },
-    () => {},
-    (error) => {
-      console.error(error)
-      throw Error("Could not connect to database")
-    }
-  )
-}
-
-export const createTables = async (db: SQLiteDatabase) => {
-
-  const ingredientsQuery = `
-    CREATE TABLE IF NOT EXISTS Ingredients (
-        id INTEGER DEFAULT 1,
-        nameIngredients TEXT,
-        descriptionIngredients TEXT,
-        uniteIngredients TEXT,
-        prixUnitaireIngredients TEXT,
-        PRIMARY KEY(id)
-    )
-  `
-  const clientsQuery = `
-   CREATE TABLE IF NOT EXISTS Clients (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      firstName TEXT,
-      name TEXT,
-      phoneNumber TEXT
-   )
-  `
+const readSQLFile = async () => {
   try {
-    await db.executeSql(ingredientsQuery)
-    await db.executeSql(clientsQuery)
+    const sqlFileContent = await RNFS.readFile(SQL_FILE_PATH, 'utf8');
+    return sqlFileContent;
   } catch (error) {
-    console.error(error)
-    throw Error(`Failed to create tables`)
+    console.error('Error reading SQL file:', error);
   }
-}
+};
 
-
-export const getTableNames = async (db: SQLiteDatabase): Promise<string[]> => {
-
-  try {
-    const tableNames: string[] = []
-    const results = await db.executeSql(
-      "SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%'"
-    )
-    results?.forEach((result) => {
-      for (let index = 0; index < result.rows.length; index++) {
-        tableNames.push(result.rows.item(index).name)
+export const initializeDatabase = async () => {
+  const sqlFileContent = await readSQLFile();
+  db.transaction(tx => {
+    sqlFileContent.split(';').forEach(query => {
+      if (query.trim()) {
+        tx.executeSql(query);
       }
-    })
+    });
+  });
+};
 
-    return tableNames
-  } catch (error) {
-    console.error(error)
-    throw Error("Failed to get table names from database")
-  }
-}
-
-export const removeTable = async (db: SQLiteDatabase, tableName: Table) => {
-  const query = `DROP TABLE IF EXISTS ${tableName}`
-  try {
-    await db.executeSql(query)
-  } catch (error) {
-    console.error(error)
-    throw Error(`Failed to drop table ${tableName}`)
-  }
-}
+export default db;
