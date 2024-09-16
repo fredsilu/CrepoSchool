@@ -10,6 +10,24 @@ import Plats from 'components/Plats'
 import Commandes from 'components/Commandes'
 import Traiteurs from 'components/Traiteurs'
 
+import { createTables, connectToDatabase } from 'db/db';
+
+/*
+const loadData = useCallback(async () => {
+  try {
+    const db = await connectToDatabase()
+    await createTables(db)
+  } catch (error) {
+    console.error(error)
+  }
+}, [])
+
+useEffect(() => {
+  loadData()
+}, [loadData])
+
+*/
+
 const Stack = createNativeStackNavigator();
 
 export default function Svctraiteur() {
