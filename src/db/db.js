@@ -15,6 +15,7 @@ export const connectToDatabase = async () => {
 }
 
 export const createTables = async (db: SQLiteDatabase) => {
+
   const ingredientsQuery = `
     CREATE TABLE IF NOT EXISTS Ingredients (
         id INTEGER DEFAULT 1,
@@ -44,6 +45,7 @@ export const createTables = async (db: SQLiteDatabase) => {
 
 
 export const getTableNames = async (db: SQLiteDatabase): Promise<string[]> => {
+
   try {
     const tableNames: string[] = []
     const results = await db.executeSql(
@@ -54,6 +56,7 @@ export const getTableNames = async (db: SQLiteDatabase): Promise<string[]> => {
         tableNames.push(result.rows.item(index).name)
       }
     })
+
     return tableNames
   } catch (error) {
     console.error(error)
