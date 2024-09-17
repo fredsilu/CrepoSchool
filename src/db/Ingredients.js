@@ -1,18 +1,29 @@
-export const addIngredients = async (db: SQLiteDatabase, ingredient: Ingredients) => {
-  const insertQuery = `
-   INSERT INTO Ingredients (nameIngredients, descriptionIngredients, uniteIngredients,prixUnitaireIngredients)
-   VALUES (?, ?, ?,?)
- `
-  const values = [
-    ingredient.nameIngredients,
-    ingredient.descriptionIngredients,
-    ingredient.uniteIngredients,
-    ingredient.prixUnitaireIngredients,
-  ]
-  try {
-    return db.executeSql(insertQuery, values)
-  } catch (error) {
-    console.error(error)
-    throw Error("Failed to add client")
-  }
-}
+  a&mport React from 'react';
+import { View, Text, FlatList } from 'react-native';
+import { useState, useEffect } from 'react';
+import { getIngredients } from 'db/ingredientsCRUD';
+
+
+export const IngredientList = () => {
+
+  const [ingredients, setIngredients] = useState([]);
+
+    useEffect(() => {
+      getIngredients(setIngredients);
+    }, []);
+
+  return (
+    <FlatList
+      data={ingredients}
+      keyExtractor={item => item.id.toString()}
+      renderItem={({ item }) => (
+        <View>
+          <Text>{item.nameIngredients}</Text>
+          <Text>{item.descriptionIngredients}</Text>
+          <Text>{item.uniteIngredients}</Text>
+          <Text>{item.prixUnitaireIngredients}</Text>
+        </View>
+      )}
+    />
+  );
+};

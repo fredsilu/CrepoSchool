@@ -2,7 +2,8 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Image, StyleSheet, Button, Text, View } from 'react-native'
-import { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
+import { initializeDatabase } from 'db/databas';
 
 import HomeScreen from 'components/Homescreen'
 
@@ -12,9 +13,15 @@ import Commandes from 'components/Commandes'
 import Traiteurs from 'components/Traiteurs'
 
 
+
+
 const Stack = createNativeStackNavigator();
 
 export default function Svctraiteur() {
+
+    useEffect(() => {
+      initializeDatabase();
+    }, []);
 
 
   return (

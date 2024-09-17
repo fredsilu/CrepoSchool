@@ -1,11 +1,29 @@
-import React, { Component } from "react";
-import { Button, View, Text } from "react-native";
+import React from 'react';
+import { View, Text, FlatList } from 'react-native';
+import { useState, useEffect } from 'react';
+import { getIngredients } from 'db/ingredientsCRUD';
 
 
-export default function Ingredients() {
+export const IngredientList = () => {
+
+  const [ingredients, setIngredients] = useState([]);
+
+    useEffect(() => {
+      getIngredients(setIngredients);
+    }, []);
+
   return (
-    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-      <Text>INGREDIENTS</Text>
-    </View>
+    <FlatList
+      data={ingredients}
+      keyExtractor={item => item.id.toString()}
+      renderItem={({ item }) => (
+        <View>
+          <Text>{item.nameIngredients}</Text>
+          <Text>{item.descriptionIngredients}</Text>
+          <Text>{item.uniteIngredients}</Text>
+          <Text>{item.prixUnitaireIngredients}</Text>
+        </View>
+      )}
+    />
   );
-}
+};
