@@ -8,7 +8,7 @@ export default function HomeScreen({ navigation }) {
   return (
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
       <Text>Home Screen</Text>
-      <Button
+  /*    <Button
         title="Ingredients"
         onPress={() => navigation.navigate("Ingredients")}
       />
@@ -23,7 +23,7 @@ export default function HomeScreen({ navigation }) {
       <Button
         title="Traiteurs"
         onPress={() => navigation.navigate("Traiteurs")}
-      />
+      />  */
     </View>
   );
 }

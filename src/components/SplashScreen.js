@@ -67,7 +67,7 @@ export const Splash = (isAppReady = props.isAppReady) => {
             style={[style.container, { opacity: containerOpacity }]}
         >
             <Animated.Image
-                source={require("img/Crepolia_9_300.jpg")}
+                source={require("img/ic_search.png")}
                 fadeDuration={0}
                 onLoad={() => {
                     setState(FADE_IN_IMAGE);
