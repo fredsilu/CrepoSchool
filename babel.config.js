@@ -10,6 +10,7 @@ module.exports = {
           extensions: ['.ios.js', '.android.js','.jsx', '.js', '.ts', '.tsx', '.native.js','.json'],
           alias: {
             'components': './src/components/',
+            'db': './src/db/',
             'navigation': './src/navigation/',
             'animations':'./src/assets/animations',
             'store': './src/store/',
@@ -23,5 +24,3 @@ module.exports = {
     ]
   ],
 };
-
-

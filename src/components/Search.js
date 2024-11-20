@@ -6,8 +6,6 @@ import { ImageBackground,StyleSheet, View, TextInput, Button, ActivityIndicator,
 import { getFilmsFromApiWithSearchedText, getCrepoliaToken, getCrepoliaPosts } from 'api/TMDBApi'
 
 
-
-
 class Search extends React.Component {
 
   constructor(props) {
@@ -20,16 +18,6 @@ class Search extends React.Component {
       isLoading: false
     }
   }
-
-  /*
-  _getCrepoliaPostsWP() {
-    getCrepoliaToken()
-      .then(data => {
-        getCrepoliaPosts(data.jwt_token)
-          .then(result => console.log(JSON.stringify(result, null, 4)))
-
-      })
-  }*/
 
   _loadFilms() {
     if (this.searchedText.length > 0) {
